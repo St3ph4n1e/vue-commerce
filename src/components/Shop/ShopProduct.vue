@@ -1,14 +1,29 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import type { ProductInterface } from '@/interfaces/product.interface';
+
+
+defineProps<{
+  product: ProductInterface
+}>()
+
+const emit = defineEmits<{
+
+  (e: 'addProductToCart', productId: number): void
+}>()
+
+</script>
+
+
 
 <template>
   <div class="product d-flex flex-column">
-    <div class="product-image"></div>
+    <div  class="product-image" :style="{backgroundImage: `url(${product.image})`}"></div>
     <div class="p-10 d-flex flex-column">
-      <h4>Macbook Pro</h4>
-      <p>Performances exceptionnelles avec la puce M1 Pro ou M1</p>
+      <h4>{{product.title}}</h4>
+      <p>{{product.description}}</p>
       <div class="d-flex flex-row align-items-center">
-        <strong class="flex-fill">Prix : 1500€</strong>
-        <button class="btn btn-primary">Ajouter au panier</button>
+        <strong class="flex-fill">Prix : {{product.price}}€</strong>
+        <button class="btn btn-primary" @click="emit('addProductToCart',product.id)">Ajouter au panier</button>
       </div>
     </div>
   </div>
